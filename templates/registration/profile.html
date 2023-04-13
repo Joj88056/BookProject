@@ -1,0 +1,33 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %} &nbsp;
+
+{% block content %}
+    <h2>Profile</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% if profile_form.non_fields_errors %}
+            <ul>
+                {% for error in profile_form.non_fields_errors %}
+                    <li><em>{{ error|escape }}</em></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% for field in profile_form.visible_fields %}
+            {% if field.errors %}
+                <ul>
+                    {% for error in field.errors %}
+                        <li><em>{{ error|escape }}</em></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <p>{{ field.label_tag }}<br>{{ field }}<br>{{ field.help_text }}</p>
+        {% endfor %}
+
+        <input type="submit" value="Обновить">
+    </form>
+
+{% endblock content %}>
